@@ -77,6 +77,7 @@ const candidates = [
 export default function CreatorDashboard() {
   return (
     <div>
+      gfddg
       <ul role="list" className="mt-5 border-t border-gray-200 divide-y divide-gray-200 sm:mt-0 sm:border-t-0">
         {candidates.map((candidate) => (
           <li key={candidate.email}>
