@@ -19,6 +19,7 @@ contract CreatorFund is Owner {
         string linkedIn; // social media
         string instagram;
         string twitter;
+        string country;
     }
     
     struct User {
@@ -33,6 +34,9 @@ contract CreatorFund is Owner {
         uint withdrawbleBalance;
     }
 
+    address[] public totalCreatorsList;
+    address[] totalUsersList;
+
     mapping (address => mapping (address => uint))  public sentFundsList; // funds sent from wallet
     mapping (address => mapping (address => uint))  public receivedFundsList; // funds received in wallet
     mapping(address => User) public users;
@@ -45,6 +49,7 @@ contract CreatorFund is Owner {
     function createUser(string memory _name) public returns (bool){
         address payable wallet = payable(msg.sender);
         users[msg.sender] = User(wallet,_name,false,false,0,0,0,0,0);
+        totalUsersList.push(msg.sender);
         return true;
     }
 
@@ -56,8 +61,15 @@ contract CreatorFund is Owner {
         string memory _website,
         string memory _linkedIn,
         string memory _instagram,
-        string memory _twitter) public returns(bool)  {
+        string memory _twitter,
+        string memory _country
+        ) public returns(bool)  {
         User storage myUser = users[msg.sender];
+
+        if(myUser.isCreator == false){
+            totalCreatorsList.push(msg.sender);
+        }
+        
         myUser.isCreator = true;
         creators[msg.sender] = Creator(
             _tags,
@@ -67,8 +79,10 @@ contract CreatorFund is Owner {
             _website,
             _linkedIn,
             _instagram,
-            _twitter
+            _twitter,
+            _country
         );
+        
         return true;
     }
 
@@ -99,22 +113,67 @@ contract CreatorFund is Owner {
         thisUser.withdrawbleBalance-=actualWithdrawAmount;
     }
 
-    function getCreatorInfo() public view returns (Creator memory){
-        require(users[msg.sender].walletAddress != address(0), "No User Found");
-        require(users[msg.sender].isCreator == true,"User is not a Creator");
-        Creator memory myCreator = creators[msg.sender];
-        return myCreator;
+    function getCreatorInfo(address _address) public view returns (
+        string[] memory ,
+        string memory ,
+        string memory ,
+        string memory ,
+        string memory ,
+        string memory ,
+        string memory ,
+        string memory ,
+        string memory 
+    ){
+        require(users[_address].walletAddress != address(0), "No User Found");
+        require(users[_address].isCreator == true,"User is not a Creator");
+        Creator memory myCreator = creators[_address];
+        return (
+            myCreator.tags,
+            myCreator.photo,
+            myCreator.description,
+            myCreator.emailId,
+            myCreator.website,
+            myCreator.linkedIn,
+            myCreator.instagram,
+            myCreator.twitter,
+            myCreator.country
+        )
+        ;
     }
 
-    function getUserData() public view returns (User memory){
+    function getUserData() public view returns (
+        address,
+        string memory,
+        bool,
+        bool,
+        uint,
+        uint,
+        uint,
+        uint,
+        uint
+    ){
         require(users[msg.sender].walletAddress != address(0), "No User Found");
         User memory myUser = users[msg.sender];
-        return myUser;
+        return (
+            myUser.walletAddress,
+            myUser.name,
+            myUser.isDisabled,
+            myUser.isCreator,
+            myUser.totalFundContributorsCount,
+            myUser.totalFundsReceived,
+            myUser.totalCreatorsFundedCount,
+            myUser.totalFundsSent,
+            myUser.withdrawbleBalance
+            );
     }
 
     function disableUser(address _creator)  public isOwner returns(bool) {
         users[_creator].isDisabled = true;
         return true;
     }
+
+  function getAllCreatorsList() public view returns (address[] memory){
+      return totalCreatorsList;
+  }
 
 } 

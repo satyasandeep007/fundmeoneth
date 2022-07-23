@@ -8,12 +8,19 @@ export default (state, action) => {
         provider,
         signer,
         accounts,
-        Contract,
+        Contract
+      };
+    case "ADD_CREATOR_DATA":
+      const { creatorData, totalCount } = action.payload;
+      return {
+        ...state,
+        creatorData,
+        totalCount
       };
     case "SET_LOADING":
       return {
         ...state,
-        loading: action.payload,
+        loading: action.payload
       };
     default:
       return state;
