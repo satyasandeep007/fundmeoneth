@@ -34,12 +34,10 @@ const App = () => {
   const getAllCreators = async (Contract) => {
     try {
       const totalCreatorsAddresses = await Contract.getAllCreatorsList();
-      console.log(totalCreatorsAddresses, "creatorInfo");
       const creatorData = [];
       for (let index = 0; index < totalCreatorsAddresses.length; index++) {
         const creatorAddress = totalCreatorsAddresses[index];
         const creator = await Contract.getCreatorInfo(creatorAddress);
-        console.log(creator, "creator");
         const myCreator = {};
         (myCreator.tags = creator[0]),
           (myCreator.photo = creator[1]),

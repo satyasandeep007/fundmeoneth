@@ -2,11 +2,10 @@ import React, { useEffect, useContext } from "react";
 import { GlobalContext } from "../../context/context";
 
 export default function Example() {
-  const { loading, setLoading, addWeb3ProviderToContext, addPatientData, accounts, Contract } = useContext(GlobalContext);
+  const { Contract } = useContext(GlobalContext);
 
   const handleSubmitForm = async (e) => {
     e.preventDefault();
-    console.log("submit form");
     await addNewCreator();
   };
 
@@ -24,13 +23,7 @@ export default function Example() {
     };
 
     const { tags, photo, description, emailId, website, linkedIn, instagram, twitter, country } = data;
-    const insertedRecord = await Contract.createOrUpdateCreator(tags, photo, description, emailId, website, linkedIn, instagram, twitter, country);
-    // const totalCountInNumber = ethers.utils.formatUnits(totalCount, 0);
-    console.log(insertedRecord, "creatorInfo");
-    // await addPatientData({
-    //   totalCount: Number(totalCountInNumber),
-    //   totalCreators
-    // });
+    await Contract.createOrUpdateCreator(tags, photo, description, emailId, website, linkedIn, instagram, twitter, country);
   };
 
   return (
