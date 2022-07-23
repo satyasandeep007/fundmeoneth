@@ -1,16 +1,21 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import Transactions from "./Transactions";
-/* This example requires Tailwind CSS v2.0+ */
+import { GlobalContext } from "../../context/context";
+
 const stats = [
   { name: "Withdrawable Balance", stat: "897 eth" },
   { name: "Total funded", stat: "423324 eth" },
   { name: "Total Contributors", stat: "89" }
 ];
 
-export default function Example() {
+const CreatorDashboard = () => {
+  const { provider, accounts } = useContext(GlobalContext);
+  // useEffect(() => {
+  //   provider.getHistory(accounts[0])
+  // }, [])
+
   return (
     <div>
-      
       <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
         {stats.map((item) => (
           <div key={item.name} className="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
@@ -19,7 +24,9 @@ export default function Example() {
           </div>
         ))}
       </dl>
-      <Transactions/>
+      <Transactions />
     </div>
   );
-}
+};
+
+export default CreatorDashboard;
