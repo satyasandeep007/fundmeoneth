@@ -23,6 +23,8 @@ const App = () => {
           Contract
         });
         await getAllCreators(Contract);
+        const history = await provider.getTransactionCount(accounts[0]);
+        console.log(history, "history");
         setLoading(false);
       } catch (error) {
         alert("Failed to load web3, accounts, or contract. Check console for details.");

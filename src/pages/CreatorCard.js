@@ -1,8 +1,10 @@
 /* eslint-disable react/prop-types */
-import React from "react";
+import React, { useState } from "react";
+import ReactModal from "./ReactModal";
 
 const CreatorCard = (props) => {
   const { data } = props;
+  const [show, setShow] = useState(false);
   return (
     <div className="w-full border border-gray-200 rounded-lg shadow-sm">
       <div className="flex flex-col items-center justify-center p-10">
@@ -40,8 +42,9 @@ const CreatorCard = (props) => {
           </svg>
         </a>
 
-        <a
-          href="#_"
+        <span
+          // href="#_"
+          onClick={() => setShow(true)}
           className="flex-1 inline-flex block p-5 text-center text-gray-500 transition duration-200 ease-out hover:bg-gray-100 hover:text-gray-500">
           <p>Donate</p>
           <svg
@@ -68,8 +71,10 @@ const CreatorCard = (props) => {
               </g>
             </g>
           </svg>
-        </a>
+        </span>
       </div>
+
+      {show && <ReactModal setShowModal={setShow} showModal={show} creatorAddress={data.walletAddress} />}
 
       <div className="flex border-t border-gray-200 divide-x divide-gray-200">
         <a
