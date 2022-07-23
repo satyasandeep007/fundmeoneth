@@ -1,8 +1,15 @@
 import React from "react";
 
 export default function Example() {
+
+  const handleSubmitForm = (e) => { 
+    e.preventDefault();
+    console.log("submit form");
+   }
+
+
   return (
-    <form className="space-y-8 divide-y divide-gray-200 p-10">
+    <form className="space-y-8 divide-y divide-gray-200 p-10" onSubmit={handleSubmitForm}>
       <div className="space-y-8 divide-y divide-gray-200">
         <div>
           <div>

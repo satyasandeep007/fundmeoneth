@@ -22,8 +22,8 @@ export default function Home() {
                   It never been easier to fund the creators on chain.
                 </p>
                 <div className="relative flex flex-col sm:flex-row sm:space-x-4">
-                  <a
-                    href="#_"
+                  <Link
+                    to="/creator/discover"
                     className="flex items-center w-full px-6 py-3 mb-3 text-lg text-white bg-indigo-600 rounded-md sm:mb-0 hover:bg-indigo-700 sm:w-auto">
                     Discover Creators
                     <svg
@@ -38,10 +38,10 @@ export default function Home() {
                       <line x1="5" y1="12" x2="19" y2="12"></line>
                       <polyline points="12 5 19 12 12 19"></polyline>
                     </svg>
-                  </a>
-                  <a href="#_" className="flex items-center px-6 py-3 text-gray-500 bg-gray-100 rounded-md hover:bg-gray-200 hover:text-gray-600">
+                  </Link>
+                  <Link to="/creator/profile" className="flex items-center px-6 py-3 text-gray-500 bg-gray-100 rounded-md hover:bg-gray-200 hover:text-gray-600">
                     Make a Creator Profile
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

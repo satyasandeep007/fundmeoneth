@@ -1,7 +1,7 @@
 /* This example requires Tailwind CSS v2.0+ */
 import React, { useContext } from "react";
 import { GlobalContext } from "../context/context";
-
+import { Link } from "react-router-dom";
 export default function Example() {
   const { loading, accounts } = useContext(GlobalContext);
 
@@ -9,29 +9,29 @@ export default function Example() {
     <section className="w-full px-8 text-gray-700 bg-white">
       <div className="container flex flex-col flex-wrap items-center justify-between py-5 mx-auto md:flex-row max-w-7xl">
         <div className="relative flex flex-col md:flex-row">
-          <a href="#_" className="flex items-center mb-5 font-medium text-gray-900 lg:w-auto lg:items-center lg:justify-center md:mb-0">
+          <Link to="/" className="flex items-center mb-5 font-medium text-gray-900 lg:w-auto lg:items-center lg:justify-center md:mb-0">
             <span className="mx-auto text-xl font-black leading-none text-gray-900 select-none">
               fundmeon
               <span className="w-full text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-blue-500 to-purple-500 lg:inline">ETH</span>
               <span className="text-indigo-600">.</span>
             </span>
-          </a>
+          </Link>
           <nav className="flex flex-wrap items-center mb-5 text-base md:mb-0 md:pl-8 md:ml-8 md:border-l md:border-gray-200">
-            <a href="#_" className="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900">
+            <Link to="/creator/discover" className="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900">
               Discover
-            </a>
-            <a href="#_" className="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900">
+            </Link>
+            <Link to="/analytics/dashboard" className="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900">
               Dashboard
-            </a>
-            <a href="#_" className="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900">
+            </Link>
+            <Link to="/creator/profile" className="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900">
               Become a Creator
-            </a>
+            </Link>
           </nav>
         </div>
 
         <div className="inline-flex items-center ml-5 space-x-6 lg:justify-end">
           {accounts && accounts.length > 0 && (
-            <span className="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900">Connected to : {accounts[0]}</span>
+            <span className="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900 bg-indigo-100">Connected to : {accounts[0]}</span>
           )}
 
           <button
