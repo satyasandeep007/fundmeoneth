@@ -1,12 +1,45 @@
-import React, { useEffect, useContext } from "react";
+import React, { useContext, useState } from "react";
 import { GlobalContext } from "../../context/context";
 
 export default function Example() {
   const { Contract } = useContext(GlobalContext);
 
+  const [email, setEmail] = useState("");
+  const [about, setAbout] = useState("");
+  const [photo, setPhoto] = useState("");
+  const [linkedIn, setLinkedIn] = useState("");
+  const [instagram, setInstagram] = useState("");
+  const [twitter, setTwitter] = useState("");
+  const [website, setWebsite] = useState("");
+  const [country, setCountry] = useState("");
+  const [tags, setTags] = useState("");
+
   const handleSubmitForm = async (e) => {
     e.preventDefault();
-    await addNewCreator();
+
+    const data = {
+      email,
+      about,
+      photo,
+      linkedIn,
+      instagram,
+      twitter,
+      website,
+      country,
+      tags: tags.split(",")
+    };
+
+    await addNewCreator(data);
+
+    setEmail("");
+    setAbout("");
+    setPhoto("");
+    setLinkedIn("");
+    setInstagram("");
+    setTwitter("");
+    setWebsite("");
+    setCountry("");
+    setTags("");
   };
 
   const addNewCreator = async () => {
@@ -42,6 +75,7 @@ export default function Example() {
               </label>
               <div className="mt-1 flex rounded-md shadow-sm">
                 <input
+                  onChange={(e) => setEmail(e.target.value)}
                   type="text"
                   name="username"
                   id="username"
@@ -57,6 +91,7 @@ export default function Example() {
               </label>
               <div className="mt-1">
                 <textarea
+                  onChange={(e) => setAbout(e.target.value)}
                   id="about"
                   name="about"
                   rows={3}
@@ -67,21 +102,35 @@ export default function Example() {
               <p className="mt-2 text-sm text-gray-500">Write a few sentences about yourself.</p>
             </div>
 
-            <div className="sm:col-span-6">
-              <label htmlFor="photo" className="block text-sm font-medium text-gray-700">
+            <div className="sm:col-span-4">
+              <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+                Website
+              </label>
+              <div className="mt-1 flex rounded-md shadow-sm">
+                <input
+                  onChange={(e) => setWebsite(e.target.value)}
+                  type="text"
+                  name="username"
+                  id="username"
+                  autoComplete="username"
+                  className="flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
+                />
+              </div>
+            </div>
+
+            <div className="sm:col-span-4">
+              <label htmlFor="username" className="block text-sm font-medium text-gray-700">
                 Photo
               </label>
-              <div className="mt-1 flex items-center">
-                <span className="h-12 w-12 rounded-full overflow-hidden bg-gray-100">
-                  <svg className="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                  </svg>
-                </span>
-                <button
-                  type="button"
-                  className="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                  Change
-                </button>
+              <div className="mt-1 flex rounded-md shadow-sm">
+                <input
+                  onChange={(e) => setPhoto(e.target.value)}
+                  type="text"
+                  name="username"
+                  id="username"
+                  autoComplete="username"
+                  className="flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
+                />
               </div>
             </div>
           </div>
@@ -100,6 +149,7 @@ export default function Example() {
               </label>
               <div className="mt-1">
                 <input
+                  onChange={(e) => setLinkedIn(e.target.value)}
                   type="text"
                   name="linkedin"
                   id="linkedin"
@@ -111,10 +161,11 @@ export default function Example() {
 
             <div className="sm:col-span-3">
               <label htmlFor="youtube" className="block text-sm font-medium text-gray-700">
-                Youtube
+                instagram
               </label>
               <div className="mt-1">
                 <input
+                  onChange={(e) => setInstagram(e.target.value)}
                   type="text"
                   name="youtube"
                   id="youtube"
@@ -130,6 +181,7 @@ export default function Example() {
               </label>
               <div className="mt-1">
                 <input
+                  onChange={(e) => setTwitter(e.target.value)}
                   type="text"
                   name="twitter"
                   id="twitter"
@@ -141,10 +193,11 @@ export default function Example() {
 
             <div className="sm:col-span-3">
               <label htmlFor="facebook" className="block text-sm font-medium text-gray-700">
-                Facebook
+                Country
               </label>
               <div className="mt-1">
                 <input
+                  onChange={(e) => setCountry(e.target.value)}
                   type="text"
                   name="facebook"
                   id="facebook"
@@ -155,19 +208,18 @@ export default function Example() {
             </div>
 
             <div className="sm:col-span-3">
-              <label htmlFor="country" className="block text-sm font-medium text-gray-700">
-                Country
+              <label htmlFor="facebook" className="block text-sm font-medium text-gray-700">
+                Tags
               </label>
               <div className="mt-1">
-                <select
-                  id="country"
-                  name="country"
-                  autoComplete="country-name"
-                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
-                  <option>India</option>
-                  <option>United States of America</option>
-                  <option>United Kingdom</option>
-                </select>
+                <input
+                  onChange={(e) => setTags(e.target.value)}
+                  type="text"
+                  name="facebook"
+                  id="facebook"
+                  autoComplete="family-name"
+                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                />
               </div>
             </div>
           </div>
