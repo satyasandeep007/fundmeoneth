@@ -2,9 +2,7 @@
 import React from "react";
 
 const CreatorCard = (props) => {
-  console.log("hi");
   const { data } = props;
-  console.log(data, "data");
   return (
     <div className="w-full border border-gray-200 rounded-lg shadow-sm">
       <div className="flex flex-col items-center justify-center p-10">

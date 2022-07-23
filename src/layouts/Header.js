@@ -20,7 +20,7 @@ export default function Example() {
             <Link to="/creator/discover" className="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900">
               Discover
             </Link>
-            <Link to="/analytics/dashboard" className="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900">
+            <Link to="/analytics/dashboard/user" className="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900">
               Dashboard
             </Link>
             <Link to="/creator/profile" className="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900">

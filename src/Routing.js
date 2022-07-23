@@ -19,13 +19,15 @@ function Routing() {
   return (
     <>
       <BrowserRouter>
+      
         <Header />
-        <Routes>
+        <Routes  path="/analytics/dashboard" to="/analytics/dashboard/creator" >
+        <Route exact path="/" element={<Home />} />
           <Route exact path="/" element={<Home />} />
           <Route exact path="/creator/profile" element={<CreatorProfile />} />
           <Route exact path="/creator/view" element={<CreatorView />} />
           <Route exact path="/creator/discover" element={<CreatorDiscover />} />
-          <Route  path="/analytics/dashboard" element={<Dashboard />}>
+          <Route  path="/analytics/dashboard"  element={<Dashboard />}>
             <Route  path="/analytics/dashboard/creator" element={<CreatorDashboard />} />
             <Route  path="/analytics/dashboard/user" element={<UserDashboard />} />
           </Route>
