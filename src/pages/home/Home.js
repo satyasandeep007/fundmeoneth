@@ -1,72 +1,63 @@
 /* This example requires Tailwind CSS v2.0+ */
-import React from "react"
-import { Popover } from "@headlessui/react"
-import { MenuIcon } from "@heroicons/react/outline"
+import React from "react";
 import { Link } from "react-router-dom";
+import TrendingCreators from "./trending-creators/TrendingCreators";
+import Quote from "./Quote";
+import { ReactComponent as HeroIllustration } from "./Hero.svg";
 
-export default function Example() {
+export default function Home() {
   return (
-    <div className="relative bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto">
-        <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
-          <svg
-            className="hidden lg:block absolute right-0 inset-y-0 h-full w-48 text-white transform translate-x-1/2"
-            fill="currentColor"
-            viewBox="0 0 100 100"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-          >
-            <polygon points="50,0 100,0 50,100 0,100" />
-          </svg>
-
-          <Popover>
-            <div className="relative pt-6 px-4 sm:px-6 lg:px-8">
-              <nav className="relative flex items-center justify-between sm:h-10 lg:justify-start" aria-label="Global">
-                <div className="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
-                  <div className="flex items-center justify-between w-full md:w-auto">
-                    <div className="-mr-2 flex items-center md:hidden">
-                      <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
-                        <span className="sr-only">Open main menu</span>
-                        <MenuIcon className="h-6 w-6" aria-hidden="true" />
-                      </Popover.Button>
-                    </div>
-                  </div>
-                </div>
-              </nav>
-            </div>
-          </Popover>
-
-          <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
-            <div className="sm:text-center lg:text-left">
-              <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                <span className="block xl:inline">Support Your Favorite</span>{" "}
-                <span className="block text-indigo-600 xl:inline">  Content Creator</span>
-              </h1>
-              <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                Click discover to browse content creators and donate using your metamsk wallet
-              </p>
-              <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-                <div className="rounded-md shadow">
-                <Link
-                  to="/creator/discover"
-                  className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
-                  >
-                    Discover
-                  </Link>
-                
+    <>
+      <section className="px-2 py-20 bg-white md:px-0">
+        <div className="container items-center max-w-6xl px-8 mx-auto xl:px-5">
+          <div className="flex flex-wrap items-center sm:-mx-3">
+            <div className="w-full md:w-1/2 md:px-3">
+              <div className="w-full pb-6 space-y-6 sm:max-w-md lg:max-w-lg md:space-y-4 lg:space-y-8 xl:space-y-9 sm:pr-5 lg:pr-0 md:pb-0">
+                <h1 className="text-5xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-5xl lg:text-5xl xl:text-5xl">
+                  <span className="block xl:inline">We are not creatures,</span>
+                  <br className="hidden md:block" />
+                  <span className="w-full text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-blue-500 to-purple-500 lg:inline">We are creators!</span>
+                </h1>
+                <p className="mx-auto text-base text-gray-500 sm:max-w-md lg:text-xl md:max-w-3xl">
+                  It never been easier to fund the creators on chain.
+                </p>
+                <div className="relative flex flex-col sm:flex-row sm:space-x-4">
+                  <a
+                    href="#_"
+                    className="flex items-center w-full px-6 py-3 mb-3 text-lg text-white bg-indigo-600 rounded-md sm:mb-0 hover:bg-indigo-700 sm:w-auto">
+                    Discover Creators
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-5 h-5 ml-1"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </a>
+                  <a href="#_" className="flex items-center px-6 py-3 text-gray-500 bg-gray-100 rounded-md hover:bg-gray-200 hover:text-gray-600">
+                    Make a Creator Profile
+                  </a>
                 </div>
               </div>
             </div>
-          </main>
+            <div className="w-full md:w-1/2">
+              <div className="w-full h-auto overflow-hidden sm:rounded-xl">
+                <HeroIllustration />
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-        <img
-          className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full"
-          src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80"
-          alt=""
-        />
-      </div>
-    </div>
-  )
+      </section>
+
+      <TrendingCreators />
+      <Quote />
+    </>
+  );
 }
+
+
