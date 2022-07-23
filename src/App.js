@@ -48,6 +48,7 @@ const App = () => {
           (myCreator.instagram = creator[6]),
           (myCreator.twitter = creator[7]),
           (myCreator.country = creator[8]);
+          (myCreator.totalFundsReceived = creator[9]);
         creatorData.push(myCreator);
       }
       setLoading(false);

@@ -123,7 +123,8 @@ contract CreatorFund is Owner {
         string memory ,
         string memory ,
         string memory ,
-        string memory 
+        string memory ,
+        uint memory
     ){
         require(users[_address].walletAddress != address(0), "No User Found");
         require(users[_address].isCreator == true,"User is not a Creator");
@@ -139,7 +140,8 @@ contract CreatorFund is Owner {
             myCreator.instagram,
             myCreator.twitter,
             myCreator.country,
-            myUser.name
+            myUser.name,
+            myUser.totalFundsReceived
         )
         ;
     }
