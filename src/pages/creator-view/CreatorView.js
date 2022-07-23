@@ -1,6 +1,6 @@
 
 import React, { useState } from "react"
-import { Disclosure, RadioGroup, Tab } from "@headlessui/react"
+import { Tab } from "@headlessui/react"
 import { StarIcon } from "@heroicons/react/solid"
 import Elon from "../../assets/ElonMusk.jpeg"
 const product = {

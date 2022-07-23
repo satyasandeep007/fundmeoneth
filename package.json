@@ -1,11 +1,7 @@
 {
-  "name": "fe",
-  "version": "0.1.0",
+  "name": "creator-fund",
+  "version": "1.0.0",
   "private": true,
-  "author": {
-    "name": "Shiva Kumar Mangina",
-    "email": "shiva2nani.mangina@gmail.com"
-  },
   "dependencies": {
     "@headlessui/react": "^1.6.0",
     "@heroicons/react": "^1.0.6",
