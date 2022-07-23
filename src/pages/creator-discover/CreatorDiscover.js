@@ -5,7 +5,6 @@ import CreatorCard from "../CreatorCard";
 
 const CreatorDiscover = () => {
   const { creatorData } = useContext(GlobalContext);
-  console.log(creatorData, "creatorData");
   return (
     <section className="w-full py-12 bg-white lg:py-24">
       <div className="max-w-6xl px-12 mx-auto text-center">
@@ -21,7 +20,6 @@ const CreatorDiscover = () => {
             creatorData.map((item, i) => {
               return <CreatorCard data={item} key={i} />;
             })}
-          {/* <CreatorCard /> <CreatorCard /> <CreatorCard /> */}
         </div>
       </div>
     </section>
