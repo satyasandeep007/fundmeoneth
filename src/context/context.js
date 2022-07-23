@@ -11,14 +11,21 @@ export const GlobalProvider = ({ children }) => {
   function addWeb3ProviderToContext(data) {
     dispatch({
       type: "ADD_WEB3_PROVIDER",
-      payload: data,
+      payload: data
+    });
+  }
+
+  function addCreatorData(data) {
+    dispatch({
+      type: "ADD_CREATOR_DATA",
+      payload: data
     });
   }
 
   function setLoading(data) {
     dispatch({
       type: "SET_LOADING",
-      payload: data,
+      payload: data
     });
   }
 
@@ -26,9 +33,8 @@ export const GlobalProvider = ({ children }) => {
     ...state,
     setLoading,
     addWeb3ProviderToContext,
+    addCreatorData
   };
 
-  return (
-    <GlobalContext.Provider value={value}>{children}</GlobalContext.Provider>
-  );
+  return <GlobalContext.Provider value={value}>{children}</GlobalContext.Provider>;
 };

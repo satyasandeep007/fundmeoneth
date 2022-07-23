@@ -1,12 +1,37 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
+import { GlobalContext } from "../../context/context";
 
 export default function Example() {
+  const { loading, setLoading, addWeb3ProviderToContext, addPatientData, accounts, Contract } = useContext(GlobalContext);
 
-  const handleSubmitForm = (e) => { 
+  const handleSubmitForm = async (e) => {
     e.preventDefault();
     console.log("submit form");
-   }
+    await addNewCreator();
+  };
 
+  const addNewCreator = async () => {
+    const data = {
+      tags: ["crypto", "blockchain"],
+      photo: "https://avatars.githubusercontent.com/u/52450973?v=4",
+      description: "A crypto influencer",
+      emailId: "satyasandeep786@gmail.com",
+      website: "https://satyasandeep.in",
+      linkedIn: "https://www.linkedin.com/in/satyasandeep/",
+      instagram: "",
+      twitter: "https://twitter.com/satyasandeep76",
+      country: "India"
+    };
+
+    const { tags, photo, description, emailId, website, linkedIn, instagram, twitter, country } = data;
+    const insertedRecord = await Contract.createOrUpdateCreator(tags, photo, description, emailId, website, linkedIn, instagram, twitter, country);
+    // const totalCountInNumber = ethers.utils.formatUnits(totalCount, 0);
+    console.log(insertedRecord, "creatorInfo");
+    // await addPatientData({
+    //   totalCount: Number(totalCountInNumber),
+    //   totalCreators
+    // });
+  };
 
   return (
     <form className="space-y-8 divide-y divide-gray-200 p-10" onSubmit={handleSubmitForm}>
@@ -76,7 +101,6 @@ export default function Example() {
             <p className="mt-1 text-sm text-gray-500">Please mention your social id links</p>
           </div>
           <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-           
             <div className="sm:col-span-3">
               <label htmlFor="linkedin" className="block text-sm font-medium text-gray-700">
                 LinkedIn
