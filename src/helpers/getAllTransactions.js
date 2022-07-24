@@ -1,10 +1,6 @@
-export default (myaccount, startBlockNumber, endBlockNumber, provider) => {
-  if (endBlockNumber == null) {
-    endBlockNumber = provider.blockNumber();
-  }
-  if (startBlockNumber == null) {
-    startBlockNumber = endBlockNumber - 1000;
-  }
+export default (myaccount, provider) => {
+  const endBlockNumber = provider.blockNumber();
+  const startBlockNumber = endBlockNumber - 1000;
 
   const transactions = [];
 
