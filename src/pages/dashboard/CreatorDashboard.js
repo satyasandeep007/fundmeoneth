@@ -15,11 +15,12 @@ const CreatorDashboard = () => {
   const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
-    const creatorD = creatorData.map((item) => {
+    let creatorD = null;
+    creatorData.forEach((item) => {
       if (item.walletAddress == accounts[0]) {
-        return item;
+        creatorD = item;
       }
-    })[0];
+    });
     const stat = creatorD && [
       { name: "Withdrawable Balance", stat: `${creatorD.withdrawbleBalance} ETH` },
       { name: "Total funded", stat: `${creatorD.totalFundsReceived} ETH` },

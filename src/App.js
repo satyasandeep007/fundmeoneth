@@ -1,13 +1,14 @@
 import React, { useEffect, useContext } from "react";
 import Routing from "./Routing";
 import Loader from "./layouts/Loader";
-import { ethers } from "ethers";
 import "./App.css";
-import Config from "./Config";
 import { GlobalContext } from "./context/context";
+import { getAllCreators, getLoggedInUser } from "./helpers/functions";
+import { ethers } from "ethers";
+import Config from "./Config";
 
 const App = () => {
-  const { loading, setLoading, addWeb3ProviderToContext, addCreatorData, accounts, addUserInfo } = useContext(GlobalContext);
+  const { loading, accounts, addWeb3ProviderToContext, addUserInfo, addCreatorData, setLoading } = useContext(GlobalContext);
 
   useEffect(() => {
     (async () => {
@@ -27,7 +28,12 @@ const App = () => {
         await addCreatorData({
           creatorData
         });
-        await getLoggedInUser(creatorData, accounts[0]);
+        const userInfo = await getLoggedInUser(creatorData, accounts[0]);
+        console.log(userInfo, "userInfo");
+
+        await addUserInfo({
+          userInfo
+        });
         setTimeout(() => {
           setLoading(false);
         }, 1000);
@@ -37,58 +43,6 @@ const App = () => {
       }
     })();
   }, []);
-
-  const getAllCreators = async (Contract) => {
-    try {
-      const totalCreatorsAddresses = await Contract.getAllCreatorsList();
-      console.log(totalCreatorsAddresses, "totalCreatorsAddresses");
-      const creatorData = [];
-      for (let index = 0; index < totalCreatorsAddresses.length; index++) {
-        const creatorAddress = totalCreatorsAddresses[index];
-        const creator = await Contract.getCreatorInfo(creatorAddress);
-        const user = await Contract.getUserData(creatorAddress);
-        const myCreator = {};
-        myCreator.tags = creator[0];
-        myCreator.photo = creator[1];
-        myCreator.description = creator[2];
-        myCreator.emailId = creator[3];
-        myCreator.website = creator[4];
-        myCreator.linkedIn = creator[5];
-        myCreator.instagram = creator[6];
-        myCreator.twitter = creator[7];
-        myCreator.country = creator[8];
-        myCreator.walletAddress = user[0];
-        myCreator.name = user[1];
-        myCreator.isDisabled = user[2];
-        myCreator.isCreator = user[3];
-        myCreator.totalFundContributorsCount = ethers.utils.formatUnits(user[4], 0);
-        myCreator.totalFundsReceived = ethers.utils.formatUnits(user[5], 0);
-        myCreator.totalCreatorsFundedCount = ethers.utils.formatUnits(user[6], 0);
-        myCreator.totalFundsSent = ethers.utils.formatUnits(user[7], 0);
-        myCreator.withdrawbleBalance = ethers.utils.formatUnits(user[8], 0);
-        creatorData.push(myCreator);
-        return creatorData;
-      }
-    } catch (error) {
-      console.log(error, "error");
-    }
-  };
-
-  const getLoggedInUser = async (totalCreators, account) => {
-    console.log(totalCreators, "totalCreators", account);
-    const userInfo =
-      totalCreators.length > 0 &&
-      totalCreators.map((item) => {
-        if (item.walletAddress == account) {
-          return item;
-        }
-      });
-    const d = await Promise.all(totalCreators);
-    console.log(userInfo, "u");
-    await addUserInfo({
-      userInfo: userInfo[0]
-    });
-  };
 
   // eslint-disable-next-line no-constant-condition
   return <>{loading ? <Loader /> : <Routing />}</>;

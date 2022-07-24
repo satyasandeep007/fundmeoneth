@@ -2,8 +2,35 @@
 import React, { useContext } from "react";
 import { GlobalContext } from "../context/context";
 import { Link } from "react-router-dom";
+
+import { ethers } from "ethers";
+import Config from "../Config";
+import { getAllCreators, getLoggedInUser } from "../helpers/functions";
+
 export default function Example() {
-  const { loading, accounts } = useContext(GlobalContext);
+  const { loading, accounts, addWeb3ProviderToContext, addUserInfo, addCreatorData } = useContext(GlobalContext);
+
+  const doAuth = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const accounts = await provider.listAccounts();
+    const signer = provider.getSigner();
+    const Contract = new ethers.Contract(Config.CREATOR_FUND.GANACHE.CONTRACT_ADDRESS, Config.CREATOR_FUND.GANACHE.ABI, signer);
+    await addWeb3ProviderToContext({
+      provider,
+      signer,
+      accounts,
+      Contract
+    });
+    const creatorData = await getAllCreators(Contract);
+    console.log(creatorData, "creatorData");
+    await addCreatorData({
+      creatorData
+    });
+    const userInfo = await getLoggedInUser(creatorData, accounts[0]);
+    await addUserInfo({
+      userInfo: userInfo[0]
+    });
+  };
 
   return (
     <section className="w-full px-8 text-gray-700 bg-white">
@@ -36,6 +63,7 @@ export default function Example() {
 
           <button
             disabled={accounts && accounts.length > 0 && accounts[0] ? true : false}
+            onClick={doAuth}
             className="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-white whitespace-no-wrap bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600">
             {accounts && accounts.length > 0 && accounts[0] ? "Connected" : "Connect to wallet"}
           </button>

@@ -12,6 +12,7 @@ export default function Example() {
   const [twitter, setTwitter] = useState("");
   const [website, setWebsite] = useState("");
   const [country, setCountry] = useState("");
+  const [userName, setName] = useState("");
   const [tags, setTags] = useState("");
 
   useEffect(() => {
@@ -24,7 +25,8 @@ export default function Example() {
       setTwitter(userInfo.twitter);
       setWebsite(userInfo.website);
       setCountry(userInfo.country);
-      setTags(userInfo.tags);
+      setName(userInfo.name);
+      setTags(userInfo.tags.join(","));
     }
   }, []);
 
@@ -39,7 +41,8 @@ export default function Example() {
       twitter,
       website,
       country,
-      tags: tags.split(",")
+      tags: tags.split(","),
+      name: userName
     };
 
     await addNewCreator(data);
@@ -52,12 +55,14 @@ export default function Example() {
     setWebsite("");
     setCountry("");
     setTags("");
+    setName("");
   };
 
   const addNewCreator = async (createData) => {
-    const { tags, photo, description, emailId, website, linkedIn, instagram, twitter, country } = createData;
-    await Contract.createUser("Sandeep");
-    await Contract.createOrUpdateCreator(tags, photo, description, emailId, website, linkedIn, instagram, twitter, country);
+    console.log(createData, "ddd");
+    const { tags, photo, description, emailId, website, linkedIn, instagram, twitter, country, name } = createData;
+    await Contract.createUser(userName + Date.now());
+    await Contract.createOrUpdateCreator(tags, photo, description, emailId, website, linkedIn, instagram, twitter, country, name);
   };
 
   return (
@@ -217,6 +222,23 @@ export default function Example() {
             </div>
 
             <div className="sm:col-span-3">
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                Name
+              </label>
+              <div className="mt-1">
+                <input
+                  onChange={(e) => setName(e.target.value)}
+                  type="text"
+                  value={userName}
+                  name="name"
+                  id="name"
+                  autoComplete="family-name"
+                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                />
+              </div>
+            </div>
+
+            <div className="sm:col-span-3">
               <label htmlFor="facebook" className="block text-sm font-medium text-gray-700">
                 Tags
               </label>
@@ -224,7 +246,7 @@ export default function Example() {
                 <input
                   onChange={(e) => setTags(e.target.value)}
                   type="text"
-                  value={tags && tags.join(",")}
+                  value={tags}
                   name="facebook"
                   id="facebook"
                   autoComplete="family-name"

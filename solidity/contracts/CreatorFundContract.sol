@@ -133,7 +133,7 @@ contract CreatorFund is Owner {
       myCreator.linkedIn,
       myCreator.instagram,
       myCreator.twitter,
-      myCreator.country
+      myCreator.country,
       myCreator.name
     );
   }

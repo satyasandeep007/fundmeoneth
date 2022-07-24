@@ -498,7 +498,7 @@ const config = {
       ]
     },
     GANACHE: {
-      CONTRACT_ADDRESS: "0x4f690BB9A81E5Ddaf0624d91aC9F3214fb4a3794",
+      CONTRACT_ADDRESS: "0x3c5124Ad8041C0e1DaD66F39394b31eaBcC3073D",
       ABI: [
         {
           anonymous: false,
@@ -577,6 +577,11 @@ const config = {
             {
               internalType: "string",
               name: "_country",
+              type: "string"
+            },
+            {
+              internalType: "string",
+              name: "_name",
               type: "string"
             }
           ],
@@ -658,6 +663,11 @@ const config = {
             {
               internalType: "string",
               name: "country",
+              type: "string"
+            },
+            {
+              internalType: "string",
+              name: "name",
               type: "string"
             }
           ],
@@ -747,6 +757,11 @@ const config = {
               internalType: "string[]",
               name: "",
               type: "string[]"
+            },
+            {
+              internalType: "string",
+              name: "",
+              type: "string"
             },
             {
               internalType: "string",

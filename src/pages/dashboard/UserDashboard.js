@@ -16,11 +16,12 @@ export default function Example() {
   const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
-    const creatorD = creatorData.map((item) => {
+    let creatorD = null;
+    creatorData.forEach((item) => {
       if (item.walletAddress == accounts[0]) {
-        return item;
+        creatorD = item;
       }
-    })[0];
+    });
     const stat = creatorD && [
       { name: "Total fund Donated", stat: `${creatorD.totalFundsSent} ETH` },
       { name: "Total Creators Funded", stat: creatorD.totalCreatorsFundedCount }
