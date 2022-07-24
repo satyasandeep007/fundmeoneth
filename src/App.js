@@ -73,7 +73,8 @@ const App = () => {
     }
   };
 
-  return <>{loading ? <Loader /> : <Routing />}</>;
+  // eslint-disable-next-line no-constant-condition
+  return <>{true ? <Loader /> : <Routing />}</>;
 };
 
 export default App;
