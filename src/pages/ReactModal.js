@@ -9,8 +9,7 @@ export default function Modal(props) {
 
   const donateEther = async () => {
     try {
-      console.log(amount, "amount");
-      const donate = await Contract.donate(creatorAddress, amount, { value: ethers.utils.parseEther(amount) });
+      await Contract.donate(creatorAddress, amount, { value: ethers.utils.parseEther(amount) });
     } catch (error) {
       console.log(error, "error");
     }

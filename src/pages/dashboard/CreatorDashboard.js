@@ -1,18 +1,30 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Transactions from "./Transactions";
 import { GlobalContext } from "../../context/context";
 
-const stats = [
+const initialStats = [
   { name: "Withdrawable Balance", stat: "897 eth" },
   { name: "Total funded", stat: "423324 eth" },
   { name: "Total Contributors", stat: "89" }
 ];
 
 const CreatorDashboard = () => {
-  const { provider, accounts } = useContext(GlobalContext);
-  // useEffect(() => {
-  //   provider.getHistory(accounts[0])
-  // }, [])
+  const { provider, accounts, creatorData } = useContext(GlobalContext);
+  const [stats, setStats] = useState(initialStats);
+
+  useEffect(() => {
+    const creatorD = creatorData.map((item) => {
+      if (item.walletAddress == accounts[0]) {
+        return item;
+      }
+    })[0];
+    const stat = [
+      { name: "Withdrawable Balance", stat: `${creatorD.withdrawbleBalance} ETH` },
+      { name: "Total funded", stat: `${creatorD.totalFundsReceived} ETH` },
+      { name: "Total Contributors", stat: creatorD.totalFundContributorsCount }
+    ];
+    setStats(stat);
+  }, []);
 
   return (
     <div>
