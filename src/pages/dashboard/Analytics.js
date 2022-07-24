@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
+import { GlobalContext } from "../../context/context";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 const Analytics = () => {
+  const { userInfo } = useContext(GlobalContext);
+
   const [tabs, setTabs] = useState([
-    { name: "User", href: "/analytics/dashboard/user", count: "4", current: false },
-    { name: "Creator", href: "/analytics/dashboard/creator", count: "22", current: true }
+    { name: "User", href: "/analytics/dashboard/user", count: "4", current: true },
+    { name: "Creator", href: "/analytics/dashboard/creator", count: "22", current: false }
   ]);
 
   const onTabSelect = (val) => {
@@ -25,6 +28,13 @@ const Analytics = () => {
       setTabs(tabsCopy);
     }
   };
+
+  useEffect(() => {
+    if ((userInfo && !userInfo.isCreator) || !userInfo) {
+      const ts = [{ name: "User", href: "/analytics/dashboard/user", count: "4", current: true }];
+      setTabs(ts);
+    }
+  }, []);
 
   return (
     <>

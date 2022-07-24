@@ -14,23 +14,22 @@ export default function Example() {
   const [country, setCountry] = useState("");
   const [tags, setTags] = useState("");
 
-  // useEffect(() => {
-  //   if (userInfo && userInfo.isCreator) {
-  //     setEmail(userInfo.email);
-  //     setAbout(userInfo.description);
-  //     setPhoto(userInfo.photo);
-  //     setLinkedIn(userInfo.linkedIn);
-  //     setInstagram(userInfo.instagram);
-  //     setTwitter(userInfo.twitter);
-  //     setWebsite(userInfo.website);
-  //     setCountry(userInfo.country);
-  //     setTags(userInfo.tags);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (userInfo && userInfo.isCreator) {
+      setEmail(userInfo.emailId);
+      setAbout(userInfo.description);
+      setPhoto(userInfo.photo);
+      setLinkedIn(userInfo.linkedIn);
+      setInstagram(userInfo.instagram);
+      setTwitter(userInfo.twitter);
+      setWebsite(userInfo.website);
+      setCountry(userInfo.country);
+      setTags(userInfo.tags);
+    }
+  }, []);
 
   const handleSubmitForm = async (e) => {
     e.preventDefault();
-
     const data = {
       email,
       about,
@@ -44,7 +43,6 @@ export default function Example() {
     };
 
     await addNewCreator(data);
-
     setEmail("");
     setAbout("");
     setPhoto("");
@@ -57,18 +55,6 @@ export default function Example() {
   };
 
   const addNewCreator = async (createData) => {
-    const dummyData = {
-      tags: ["crypto", "blockchain"],
-      photo: "https://avatars.githubusercontent.com/u/52450973?v=4",
-      description: "A crypto influencer",
-      emailId: "satyasandeep786@gmail.com",
-      website: "https://satyasandeep.in",
-      linkedIn: "https://www.linkedin.com/in/satyasandeep/",
-      instagram: "",
-      twitter: "https://twitter.com/satyasandeep76",
-      country: "India"
-    };
-
     const { tags, photo, description, emailId, website, linkedIn, instagram, twitter, country } = createData;
     await Contract.createUser("Sandeep");
     await Contract.createOrUpdateCreator(tags, photo, description, emailId, website, linkedIn, instagram, twitter, country);
@@ -94,6 +80,7 @@ export default function Example() {
                   type="text"
                   name="username"
                   id="username"
+                  value={email}
                   autoComplete="username"
                   className="flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                 />
@@ -108,6 +95,7 @@ export default function Example() {
                 <textarea
                   onChange={(e) => setAbout(e.target.value)}
                   id="about"
+                  value={about}
                   name="about"
                   rows={3}
                   className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md"
@@ -124,6 +112,7 @@ export default function Example() {
               <div className="mt-1 flex rounded-md shadow-sm">
                 <input
                   onChange={(e) => setWebsite(e.target.value)}
+                  value={website}
                   type="text"
                   name="username"
                   id="username"
@@ -142,6 +131,7 @@ export default function Example() {
                   onChange={(e) => setPhoto(e.target.value)}
                   type="text"
                   name="username"
+                  value={photo}
                   id="username"
                   autoComplete="username"
                   className="flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
@@ -167,6 +157,7 @@ export default function Example() {
                   onChange={(e) => setLinkedIn(e.target.value)}
                   type="text"
                   name="linkedin"
+                  value={linkedIn}
                   id="linkedin"
                   autoComplete="given-name"
                   className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
@@ -182,6 +173,7 @@ export default function Example() {
                 <input
                   onChange={(e) => setInstagram(e.target.value)}
                   type="text"
+                  value={instagram}
                   name="youtube"
                   id="youtube"
                   autoComplete="family-name"
@@ -198,6 +190,7 @@ export default function Example() {
                 <input
                   onChange={(e) => setTwitter(e.target.value)}
                   type="text"
+                  value={twitter}
                   name="twitter"
                   id="twitter"
                   autoComplete="given-name"
@@ -214,6 +207,7 @@ export default function Example() {
                 <input
                   onChange={(e) => setCountry(e.target.value)}
                   type="text"
+                  value={country}
                   name="facebook"
                   id="facebook"
                   autoComplete="family-name"
@@ -230,6 +224,7 @@ export default function Example() {
                 <input
                   onChange={(e) => setTags(e.target.value)}
                   type="text"
+                  value={tags && tags.join(",")}
                   name="facebook"
                   id="facebook"
                   autoComplete="family-name"
