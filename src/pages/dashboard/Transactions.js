@@ -2,8 +2,6 @@ import React, { Component } from "react";
 /* This example requires Tailwind CSS v2.0+ */
 import { CheckCircleIcon, ChevronRightIcon, MailIcon } from "@heroicons/react/solid";
 
-
-
 const applications = [
   {
     applicant: {
@@ -43,54 +41,56 @@ const applications = [
   }
 ];
 
-export default class Transactions extends Component {
-  render() {
-    return (
-      <>
-        <div className="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
-          <h3 className="text-lg leading-6 font-medium text-gray-900">Last 5 transactions</h3>
-        </div>
-        <div className="bg-white shadow overflow-hidden sm:rounded-md">
-          <ul role="list" className="divide-y divide-gray-200">
-            {applications.map((application) => (
-              <li key={application.applicant.email}>
-                <a href={application.href} className="block hover:bg-gray-50">
-                  <div className="flex items-center px-4 py-4 sm:px-6">
-                    <div className="min-w-0 flex-1 flex items-center">
-                      <div className="flex-shrink-0">
-                        <img className="h-12 w-12 rounded-full" src={application.applicant.imageUrl} alt="" />
+const Transactions = (props) => {
+  const { transactions } = props;
+  console.log(transactions, "transactions");
+  return (
+    <>
+      <div className="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
+        <h3 className="text-lg leading-6 font-medium text-gray-900">Last 5 transactions</h3>
+      </div>
+      <div className="bg-white shadow overflow-hidden sm:rounded-md">
+        <ul role="list" className="divide-y divide-gray-200">
+          {applications.map((application) => (
+            <li key={application.applicant.email}>
+              <a href={application.href} className="block hover:bg-gray-50">
+                <div className="flex items-center px-4 py-4 sm:px-6">
+                  <div className="min-w-0 flex-1 flex items-center">
+                    <div className="flex-shrink-0">
+                      <img className="h-12 w-12 rounded-full" src={application.applicant.imageUrl} alt="" />
+                    </div>
+                    <div className="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
+                      <div>
+                        <p className="text-sm font-medium text-indigo-600 truncate">{application.applicant.name}</p>
+                        <p className="mt-2 flex items-center text-sm text-gray-500">
+                          <MailIcon className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
+                          <span className="truncate">{application.applicant.email}</span>
+                        </p>
                       </div>
-                      <div className="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
+                      <div className="hidden md:block">
                         <div>
-                          <p className="text-sm font-medium text-indigo-600 truncate">{application.applicant.name}</p>
+                          <p className="text-sm text-gray-900">
+                            On <time dateTime={application.date}>{application.dateFull}</time>
+                          </p>
                           <p className="mt-2 flex items-center text-sm text-gray-500">
-                            <MailIcon className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
-                            <span className="truncate">{application.applicant.email}</span>
+                            <CheckCircleIcon className="flex-shrink-0 mr-1.5 h-5 w-5 text-green-400" aria-hidden="true" />
+                            {application.stage}
                           </p>
                         </div>
-                        <div className="hidden md:block">
-                          <div>
-                            <p className="text-sm text-gray-900">
-                              On <time dateTime={application.date}>{application.dateFull}</time>
-                            </p>
-                            <p className="mt-2 flex items-center text-sm text-gray-500">
-                              <CheckCircleIcon className="flex-shrink-0 mr-1.5 h-5 w-5 text-green-400" aria-hidden="true" />
-                              {application.stage}
-                            </p>
-                          </div>
-                        </div>
                       </div>
                     </div>
-                    <div>
-                      <ChevronRightIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                    </div>
                   </div>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </>
-    );
-  }
-}
+                  <div>
+                    <ChevronRightIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                  </div>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
+  );
+};
+
+export default Transactions;

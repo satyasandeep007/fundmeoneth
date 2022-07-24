@@ -1,8 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { GlobalContext } from "../../context/context";
 
 export default function Example() {
-  const { Contract } = useContext(GlobalContext);
+  const { Contract, userInfo } = useContext(GlobalContext);
 
   const [email, setEmail] = useState("");
   const [about, setAbout] = useState("");
@@ -13,6 +13,20 @@ export default function Example() {
   const [website, setWebsite] = useState("");
   const [country, setCountry] = useState("");
   const [tags, setTags] = useState("");
+
+  // useEffect(() => {
+  //   if (userInfo && userInfo.isCreator) {
+  //     setEmail(userInfo.email);
+  //     setAbout(userInfo.description);
+  //     setPhoto(userInfo.photo);
+  //     setLinkedIn(userInfo.linkedIn);
+  //     setInstagram(userInfo.instagram);
+  //     setTwitter(userInfo.twitter);
+  //     setWebsite(userInfo.website);
+  //     setCountry(userInfo.country);
+  //     setTags(userInfo.tags);
+  //   }
+  // }, []);
 
   const handleSubmitForm = async (e) => {
     e.preventDefault();

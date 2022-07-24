@@ -23,9 +23,11 @@ const App = () => {
           Contract
         });
         const creatorData = await getAllCreators(Contract);
-        await getLoggedInUser(creatorData);
-        const history = await provider.getTransactionCount(accounts[0]);
-        console.log(history, "history");
+        console.log(creatorData, "creatorData");
+        await addCreatorData({
+          creatorData
+        });
+        await getLoggedInUser(creatorData, accounts[0]);
         setTimeout(() => {
           setLoading(false);
         }, 1000);
@@ -39,13 +41,13 @@ const App = () => {
   const getAllCreators = async (Contract) => {
     try {
       const totalCreatorsAddresses = await Contract.getAllCreatorsList();
+      console.log(totalCreatorsAddresses, "totalCreatorsAddresses");
       const creatorData = [];
       for (let index = 0; index < totalCreatorsAddresses.length; index++) {
         const creatorAddress = totalCreatorsAddresses[index];
         const creator = await Contract.getCreatorInfo(creatorAddress);
         const user = await Contract.getUserData(creatorAddress);
         const myCreator = {};
-        // const totalCount = ethers.utils.formatUnits(response, 0)
         myCreator.tags = creator[0];
         myCreator.photo = creator[1];
         myCreator.description = creator[2];
@@ -67,23 +69,22 @@ const App = () => {
         creatorData.push(myCreator);
         return creatorData;
       }
-      await addCreatorData({
-        totalCount: Number(totalCreatorsAddresses.length),
-        creatorData
-      });
     } catch (error) {
       console.log(error, "error");
     }
   };
 
-  const getLoggedInUser = async (totalCreators) => {
-    console.log(totalCreators);
-    const userInfo = totalCreators.map((item) => {
-      if (item.walletAddress == accounts[0]) {
-        return item;
-      }
-    });
-    console.log(userInfo);
+  const getLoggedInUser = async (totalCreators, account) => {
+    console.log(totalCreators, "totalCreators", account);
+    const userInfo =
+      totalCreators.length > 0 &&
+      totalCreators.map((item) => {
+        if (item.walletAddress == account) {
+          return item;
+        }
+      });
+    const d = await Promise.all(totalCreators);
+    console.log(userInfo, "u");
     await addUserInfo({
       userInfo: userInfo[0]
     });

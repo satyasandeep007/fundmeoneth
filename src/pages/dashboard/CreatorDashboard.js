@@ -34,7 +34,7 @@ const CreatorDashboard = () => {
         // const walletAddress = accounts[0].toLowerCase();
         const walletAddress = accounts[0];
         const transac = await getTransactions(walletAddress, provider);
-        console.log(transac);
+        setTransactions(transac.toTransactions);
       } catch (error) {
         console.error(error);
       }
@@ -51,7 +51,7 @@ const CreatorDashboard = () => {
           </div>
         ))}
       </dl>
-      <Transactions />
+      <Transactions transactions={transactions} />
     </div>
   );
 };

@@ -2,6 +2,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import Transactions from "./Transactions";
 import { GlobalContext } from "../../context/context";
+import { getTransactions } from "../../helpers/getAllTransactions";
 
 /* This example requires Tailwind CSS v2.0+ */
 const initialStats = [
@@ -10,8 +11,9 @@ const initialStats = [
 ];
 
 export default function Example() {
-  const { accounts, creatorData } = useContext(GlobalContext);
+  const { accounts, creatorData, provider } = useContext(GlobalContext);
   const [stats, setStats] = useState(initialStats);
+  const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
     const creatorD = creatorData.map((item) => {
@@ -25,6 +27,20 @@ export default function Example() {
     ];
     creatorD && setStats(stat);
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        // const walletAddress = accounts[0].toLowerCase();
+        const walletAddress = accounts[0];
+        const transac = await getTransactions(walletAddress, provider);
+        setTransactions(transac.fromTransactions);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, [accounts[0]]);
+
   return (
     <div>
       <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
@@ -37,7 +53,7 @@ export default function Example() {
       </dl>
 
       <>
-        <Transactions />
+        <Transactions transactions={transactions} />
       </>
     </div>
   );
