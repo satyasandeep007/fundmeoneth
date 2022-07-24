@@ -42,8 +42,8 @@ export default function Example() {
     setTags("");
   };
 
-  const addNewCreator = async () => {
-    const data = {
+  const addNewCreator = async (createData) => {
+    const dummyData = {
       tags: ["crypto", "blockchain"],
       photo: "https://avatars.githubusercontent.com/u/52450973?v=4",
       description: "A crypto influencer",
@@ -55,7 +55,7 @@ export default function Example() {
       country: "India"
     };
 
-    const { tags, photo, description, emailId, website, linkedIn, instagram, twitter, country } = data;
+    const { tags, photo, description, emailId, website, linkedIn, instagram, twitter, country } = createData;
     await Contract.createUser("Sandeep");
     await Contract.createOrUpdateCreator(tags, photo, description, emailId, website, linkedIn, instagram, twitter, country);
   };

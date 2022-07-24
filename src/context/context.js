@@ -22,6 +22,13 @@ export const GlobalProvider = ({ children }) => {
     });
   }
 
+  function addUserInfo(data) {
+    dispatch({
+      type: "ADD_USER_INFO",
+      payload: data
+    });
+  }
+
   function setLoading(data) {
     dispatch({
       type: "SET_LOADING",
@@ -33,7 +40,8 @@ export const GlobalProvider = ({ children }) => {
     ...state,
     setLoading,
     addWeb3ProviderToContext,
-    addCreatorData
+    addCreatorData,
+    addUserInfo
   };
 
   return <GlobalContext.Provider value={value}>{children}</GlobalContext.Provider>;

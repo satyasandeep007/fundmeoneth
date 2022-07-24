@@ -17,6 +17,12 @@ export default (state, action) => {
         creatorData,
         totalCount
       };
+    case "ADD_USER_INFO":
+      const { userInfo } = action.payload;
+      return {
+        ...state,
+        userInfo
+      };
     case "SET_LOADING":
       return {
         ...state,

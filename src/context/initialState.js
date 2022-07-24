@@ -7,5 +7,6 @@ export const initialState = {
   version: "1.0.0",
   totalRecords: null,
   creatorData: null,
-  totalCount: null
+  totalCount: null,
+  userInfo: null
 };

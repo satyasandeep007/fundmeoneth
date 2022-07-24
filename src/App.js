@@ -7,7 +7,7 @@ import Config from "./Config";
 import { GlobalContext } from "./context/context";
 
 const App = () => {
-  const { loading, setLoading, addWeb3ProviderToContext, addCreatorData, accounts } = useContext(GlobalContext);
+  const { loading, setLoading, addWeb3ProviderToContext, addCreatorData, accounts, addUserInfo } = useContext(GlobalContext);
 
   useEffect(() => {
     (async () => {
@@ -22,10 +22,13 @@ const App = () => {
           accounts,
           Contract
         });
-        await getAllCreators(Contract);
+        const creatorData = await getAllCreators(Contract);
+        await getLoggedInUser(creatorData);
         const history = await provider.getTransactionCount(accounts[0]);
         console.log(history, "history");
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000);
       } catch (error) {
         alert("Failed to load web3, accounts, or contract. Check console for details.");
         console.error(error);
@@ -62,8 +65,8 @@ const App = () => {
         myCreator.totalFundsSent = ethers.utils.formatUnits(user[7], 0);
         myCreator.withdrawbleBalance = ethers.utils.formatUnits(user[8], 0);
         creatorData.push(myCreator);
+        return creatorData;
       }
-      setLoading(false);
       await addCreatorData({
         totalCount: Number(totalCreatorsAddresses.length),
         creatorData
@@ -73,8 +76,21 @@ const App = () => {
     }
   };
 
+  const getLoggedInUser = async (totalCreators) => {
+    console.log(totalCreators);
+    const userInfo = totalCreators.map((item) => {
+      if (item.walletAddress == accounts[0]) {
+        return item;
+      }
+    });
+    console.log(userInfo);
+    await addUserInfo({
+      userInfo: userInfo[0]
+    });
+  };
+
   // eslint-disable-next-line no-constant-condition
-  return <>{true ? <Loader /> : <Routing />}</>;
+  return <>{loading ? <Loader /> : <Routing />}</>;
 };
 
 export default App;
