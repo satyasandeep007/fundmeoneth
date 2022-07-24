@@ -1,15 +1,16 @@
 import React, { useState, useContext } from "react";
 import { GlobalContext } from "../context/context";
+import { ethers } from "ethers";
 
 export default function Modal(props) {
   const { showModal, setShowModal, creatorAddress } = props;
-  const { provider, Contract } = useContext(GlobalContext);
+  const { provider, Contract, accounts } = useContext(GlobalContext);
   const [amount, setAmount] = useState(null);
 
   const donateEther = async () => {
     try {
       console.log(amount, "amount");
-      const donate = await Contract.donate(creatorAddress);
+      const donate = await Contract.donate(creatorAddress, amount, { value: ethers.utils.parseEther(amount) });
     } catch (error) {
       console.log(error, "error");
     }

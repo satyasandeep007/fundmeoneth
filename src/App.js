@@ -40,17 +40,27 @@ const App = () => {
       for (let index = 0; index < totalCreatorsAddresses.length; index++) {
         const creatorAddress = totalCreatorsAddresses[index];
         const creator = await Contract.getCreatorInfo(creatorAddress);
+        const user = await Contract.getUserData(creatorAddress);
         const myCreator = {};
-        (myCreator.tags = creator[0]),
-          (myCreator.photo = creator[1]),
-          (myCreator.description = creator[2]),
-          (myCreator.emailId = creator[3]),
-          (myCreator.website = creator[4]),
-          (myCreator.linkedIn = creator[5]),
-          (myCreator.instagram = creator[6]),
-          (myCreator.twitter = creator[7]),
-          (myCreator.country = creator[8]);
-          (myCreator.totalFundsReceived = creator[9]);
+        // const totalCount = ethers.utils.formatUnits(response, 0)
+        myCreator.tags = creator[0];
+        myCreator.photo = creator[1];
+        myCreator.description = creator[2];
+        myCreator.emailId = creator[3];
+        myCreator.website = creator[4];
+        myCreator.linkedIn = creator[5];
+        myCreator.instagram = creator[6];
+        myCreator.twitter = creator[7];
+        myCreator.country = creator[8];
+        myCreator.walletAddress = user[0];
+        myCreator.name = user[1];
+        myCreator.isDisabled = user[2];
+        myCreator.isCreator = user[3];
+        myCreator.totalFundContributorsCount = ethers.utils.formatUnits(user[4], 0);
+        myCreator.totalFundsReceived = ethers.utils.formatUnits(user[5], 0);
+        myCreator.totalCreatorsFundedCount = ethers.utils.formatUnits(user[6], 0);
+        myCreator.totalFundsSent = ethers.utils.formatUnits(user[7], 0);
+        myCreator.withdrawbleBalance = ethers.utils.formatUnits(user[8], 0);
         creatorData.push(myCreator);
       }
       setLoading(false);

@@ -498,7 +498,7 @@ const config = {
       ]
     },
     GANACHE: {
-      CONTRACT_ADDRESS: "0xE1436feb5654ff2661c3307D7518193052E36EF7",
+      CONTRACT_ADDRESS: "0x4f690BB9A81E5Ddaf0624d91aC9F3214fb4a3794",
       ABI: [
         {
           anonymous: false,
@@ -689,6 +689,11 @@ const config = {
               internalType: "address payable",
               name: "_creator",
               type: "address"
+            },
+            {
+              internalType: "uint256",
+              name: "_price",
+              type: "uint256"
             }
           ],
           name: "donate",
@@ -801,7 +806,13 @@ const config = {
           type: "function"
         },
         {
-          inputs: [],
+          inputs: [
+            {
+              internalType: "address",
+              name: "_address",
+              type: "address"
+            }
+          ],
           name: "getUserData",
           outputs: [
             {
