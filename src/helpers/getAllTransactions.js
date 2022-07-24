@@ -9,11 +9,15 @@ export default (myaccount, provider) => {
     var block = provider.getBlockWithTransactions(i);
     if (block != null && block.transactions != null) {
       block.transactions.forEach(function (e) {
-        if (myaccount == e.to) {
+        if (myaccount == e.to && toTransactions.length< 5) {
           toTransactions.push(e);
         }
-        if (myaccount == e.from) {
+        if (myaccount == e.from && fromTransactions.length< 5) {
           fromTransactions.push(e);
+        }
+
+        if( toTransactions.length>=5 && fromTransactions.length>=5){
+          return { toTransactions, fromTransactions };
         }
       });
     }
