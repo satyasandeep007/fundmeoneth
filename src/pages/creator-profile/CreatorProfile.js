@@ -56,7 +56,7 @@ export default function Example() {
     };
 
     const { tags, photo, description, emailId, website, linkedIn, instagram, twitter, country } = data;
-    await Contract.createUser("Sandeep Kumar");
+    await Contract.createUser("Sandeep");
     await Contract.createOrUpdateCreator(tags, photo, description, emailId, website, linkedIn, instagram, twitter, country);
   };
 

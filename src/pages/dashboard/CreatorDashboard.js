@@ -1,16 +1,18 @@
 import React, { useContext, useState, useEffect } from "react";
 import Transactions from "./Transactions";
 import { GlobalContext } from "../../context/context";
+import { getTransactions } from "../../helpers/getAllTransactions";
 
 const initialStats = [
-  { name: "Withdrawable Balance", stat: "897 eth" },
-  { name: "Total funded", stat: "423324 eth" },
-  { name: "Total Contributors", stat: "89" }
+  { name: "Withdrawable Balance", stat: "0 ETH" },
+  { name: "Total funded", stat: "0 ETH" },
+  { name: "Total Contributors", stat: "0" }
 ];
 
 const CreatorDashboard = () => {
   const { provider, accounts, creatorData } = useContext(GlobalContext);
   const [stats, setStats] = useState(initialStats);
+  const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
     const creatorD = creatorData.map((item) => {
@@ -18,13 +20,26 @@ const CreatorDashboard = () => {
         return item;
       }
     })[0];
-    const stat = [
+    const stat = creatorD && [
       { name: "Withdrawable Balance", stat: `${creatorD.withdrawbleBalance} ETH` },
       { name: "Total funded", stat: `${creatorD.totalFundsReceived} ETH` },
       { name: "Total Contributors", stat: creatorD.totalFundContributorsCount }
     ];
-    setStats(stat);
+    creatorD && setStats(stat);
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        // const walletAddress = accounts[0].toLowerCase();
+        const walletAddress = accounts[0];
+        const transac = await getTransactions(walletAddress, provider);
+        console.log(transac);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, [accounts[0]]);
 
   return (
     <div>

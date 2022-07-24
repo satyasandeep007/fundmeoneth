@@ -5,8 +5,8 @@ import { GlobalContext } from "../../context/context";
 
 /* This example requires Tailwind CSS v2.0+ */
 const initialStats = [
-  { name: "Total fund Donated", stat: "71,897 eth" },
-  { name: "Total Creators Funded", stat: "7" }
+  { name: "Total fund Donated", stat: "0 ETH" },
+  { name: "Total Creators Funded", stat: "0" }
 ];
 
 export default function Example() {
@@ -19,11 +19,11 @@ export default function Example() {
         return item;
       }
     })[0];
-    const stat = [
+    const stat = creatorD && [
       { name: "Total fund Donated", stat: `${creatorD.totalFundsSent} ETH` },
       { name: "Total Creators Funded", stat: creatorD.totalCreatorsFundedCount }
     ];
-    setStats(stat);
+    creatorD && setStats(stat);
   }, []);
   return (
     <div>
