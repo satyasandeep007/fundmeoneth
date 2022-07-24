@@ -19,6 +19,7 @@ contract CreatorFund is Owner {
     string instagram;
     string twitter;
     string country;
+    string name;
   }
 
   struct User {
@@ -61,7 +62,8 @@ contract CreatorFund is Owner {
     string memory _linkedIn,
     string memory _instagram,
     string memory _twitter,
-    string memory _country
+    string memory _country,
+    string memory _name
   ) public returns (bool) {
     User storage myUser = users[msg.sender];
 
@@ -70,7 +72,7 @@ contract CreatorFund is Owner {
     }
 
     myUser.isCreator = true;
-    creators[msg.sender] = Creator(_tags, _photo, _description, _emailId, _website, _linkedIn, _instagram, _twitter, _country);
+    creators[msg.sender] = Creator(_tags, _photo, _description, _emailId, _website, _linkedIn, _instagram, _twitter, _country, _name);
 
     return true;
   }
@@ -115,6 +117,7 @@ contract CreatorFund is Owner {
       string memory,
       string memory,
       string memory,
+      string memory,
       string memory
     )
   {
@@ -131,6 +134,7 @@ contract CreatorFund is Owner {
       myCreator.instagram,
       myCreator.twitter,
       myCreator.country
+      myCreator.name
     );
   }
 
