@@ -2,7 +2,7 @@ require("@nomiclabs/hardhat-waffle");
 require("@nomiclabs/hardhat-etherscan");
 require("@nomiclabs/hardhat-ethers");
 
-const dotenv = require("dotenv")
+const dotenv = require("dotenv");
 dotenv.config();
 
 task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
@@ -22,10 +22,15 @@ module.exports = {
     kovan: {
       url: process.env.KOVAN,
       accounts: [process.env.PRIVATE_KEY]
+    },
+    ropsten: {
+      url: process.env.ROPSTEN,
+      accounts: [process.env.PRIVATE_KEY]
     }
   },
   etherscan: {
     apiKey: {
+      ropsten: process.env.ETHERSCAN_API_KEY,
       kovan: process.env.ETHERSCAN_API_KEY
     }
   }

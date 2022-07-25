@@ -11,22 +11,16 @@ const initialStats = [
 ];
 
 export default function Example() {
-  const { accounts, creatorData, provider } = useContext(GlobalContext);
+  const { accounts, userInfo, provider } = useContext(GlobalContext);
   const [stats, setStats] = useState(initialStats);
   const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
-    let creatorD = null;
-    creatorData.forEach((item) => {
-      if (item.walletAddress == accounts[0]) {
-        creatorD = item;
-      }
-    });
-    const stat = creatorD && [
-      { name: "Total fund Donated", stat: `${creatorD.totalFundsSent} ETH` },
-      { name: "Total Creators Funded", stat: creatorD.totalCreatorsFundedCount }
+    const stat = userInfo && [
+      { name: "Total fund Donated", stat: `${userInfo.totalFundsSent} ETH` },
+      { name: "Total Creators Funded", stat: userInfo.totalCreatorsFundedCount }
     ];
-    creatorD && setStats(stat);
+    userInfo && setStats(stat);
   }, []);
 
   useEffect(() => {

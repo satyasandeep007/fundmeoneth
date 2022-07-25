@@ -10,23 +10,17 @@ const initialStats = [
 ];
 
 const CreatorDashboard = () => {
-  const { provider, accounts, creatorData } = useContext(GlobalContext);
+  const { provider, accounts, userInfo } = useContext(GlobalContext);
   const [stats, setStats] = useState(initialStats);
   const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
-    let creatorD = null;
-    creatorData.forEach((item) => {
-      if (item.walletAddress == accounts[0]) {
-        creatorD = item;
-      }
-    });
-    const stat = creatorD && [
-      { name: "Withdrawable Balance", stat: `${creatorD.withdrawbleBalance} ETH` },
-      { name: "Total funded", stat: `${creatorD.totalFundsReceived} ETH` },
-      { name: "Total Contributors", stat: creatorD.totalFundContributorsCount }
+    const stat = userInfo && [
+      { name: "Withdrawable Balance", stat: `${userInfo.withdrawbleBalance} ETH` },
+      { name: "Total funded", stat: `${userInfo.totalFundsReceived} ETH` },
+      { name: "Total Contributors", stat: userInfo.totalFundContributorsCount }
     ];
-    creatorD && setStats(stat);
+    userInfo && setStats(stat);
   }, []);
 
   useEffect(() => {

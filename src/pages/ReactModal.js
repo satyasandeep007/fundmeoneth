@@ -1,10 +1,11 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useContext } from "react";
 import { GlobalContext } from "../context/context";
 import { ethers } from "ethers";
 
 export default function Modal(props) {
   const { showModal, setShowModal, creatorAddress } = props;
-  const { provider, Contract, accounts } = useContext(GlobalContext);
+  const { Contract } = useContext(GlobalContext);
   const [amount, setAmount] = useState(null);
 
   const donateEther = async () => {

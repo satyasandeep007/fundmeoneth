@@ -8,7 +8,7 @@ import "./Owner.sol";
  * @title CreateFund
  * @dev Implements creater fund donation
  */
-contract CreatorFund is Owner {
+contract CreateFundContract is Owner {
   struct Creator {
     string[] tags;
     string photo; // personal info
@@ -47,6 +47,7 @@ contract CreatorFund is Owner {
   }
 
   function createUser(string memory _name) public returns (bool) {
+    require(users[msg.sender].walletAddress == address(0), "Already exising User");
     address payable wallet = payable(msg.sender);
     users[msg.sender] = User(wallet, _name, false, false, 0, 0, 0, 0, 0);
     totalUsersList.push(msg.sender);

@@ -59,10 +59,12 @@ export default function Example() {
   };
 
   const addNewCreator = async (createData) => {
-    console.log(createData, "ddd");
-    const { tags, photo, description, emailId, website, linkedIn, instagram, twitter, country, name } = createData;
-    await Contract.createUser(userName + Date.now());
-    await Contract.createOrUpdateCreator(tags, photo, description, emailId, website, linkedIn, instagram, twitter, country, name);
+    try {
+      const { tags, photo, about, email, website, linkedIn, instagram, twitter, country, name } = createData;
+      await Contract.createOrUpdateCreator(tags, photo, about, email, website, linkedIn, instagram, twitter, country, name);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -104,7 +106,6 @@ export default function Example() {
                   name="about"
                   rows={3}
                   className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md"
-                  defaultValue={""}
                 />
               </div>
               <p className="mt-2 text-sm text-gray-500">Write a few sentences about yourself.</p>

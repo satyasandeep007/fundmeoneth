@@ -3,32 +3,36 @@ import { ethers } from "ethers";
 export const getAllCreators = async (Contract) => {
   try {
     const totalCreatorsAddresses = await Contract.getAllCreatorsList();
-    console.log(totalCreatorsAddresses, "totalCreatorsAddresses");
     const creatorData = [];
     for (let index = 0; index < totalCreatorsAddresses.length; index++) {
       const creatorAddress = totalCreatorsAddresses[index];
-      const creator = await Contract.getCreatorInfo(creatorAddress);
       const user = await Contract.getUserData(creatorAddress);
-      const myCreator = {};
-      myCreator.tags = creator[0];
-      myCreator.photo = creator[1];
-      myCreator.description = creator[2];
-      myCreator.emailId = creator[3];
-      myCreator.website = creator[4];
-      myCreator.linkedIn = creator[5];
-      myCreator.instagram = creator[6];
-      myCreator.twitter = creator[7];
-      myCreator.country = creator[8];
-      myCreator.walletAddress = user[0];
-      myCreator.name = creator[9];
-      myCreator.isDisabled = user[2];
-      myCreator.isCreator = user[3];
-      myCreator.totalFundContributorsCount = ethers.utils.formatUnits(user[4], 0);
-      myCreator.totalFundsReceived = ethers.utils.formatUnits(user[5], 0);
-      myCreator.totalCreatorsFundedCount = ethers.utils.formatUnits(user[6], 0);
-      myCreator.totalFundsSent = ethers.utils.formatUnits(user[7], 0);
-      myCreator.withdrawbleBalance = ethers.utils.formatUnits(user[8], 0);
-      creatorData.push(myCreator);
+      const userInfo = {};
+      if (user && user[2] !== true) {
+        userInfo.name = user[1];
+        userInfo.isDisabled = user[2];
+        userInfo.isCreator = user[3];
+        userInfo.totalFundContributorsCount = ethers.utils.formatUnits(user[4], 0);
+        userInfo.totalFundsReceived = ethers.utils.formatUnits(user[5], 0);
+        userInfo.totalCreatorsFundedCount = ethers.utils.formatUnits(user[6], 0);
+        userInfo.totalFundsSent = ethers.utils.formatUnits(user[7], 0);
+        userInfo.withdrawbleBalance = ethers.utils.formatUnits(user[8], 0);
+      }
+      if (user[2] !== true && user[3] === true) {
+        const creator = await Contract.getCreatorInfo(creatorAddress);
+        userInfo.tags = creator[0].map((i) => i.trim());
+        userInfo.photo = creator[1];
+        userInfo.description = creator[2];
+        userInfo.emailId = creator[3];
+        userInfo.website = creator[4];
+        userInfo.linkedIn = creator[5];
+        userInfo.instagram = creator[6];
+        userInfo.twitter = creator[7];
+        userInfo.country = creator[8];
+        userInfo.walletAddress = user[0];
+        userInfo.name = creator[9];
+      }
+      userInfo && Object.keys(userInfo).length !== 0 && creatorData.push(userInfo);
     }
     return creatorData;
   } catch (error) {
@@ -36,18 +40,42 @@ export const getAllCreators = async (Contract) => {
   }
 };
 
-export const getLoggedInUser = async (totalCreators, account) => {
-  console.log(totalCreators, "totalCreators", account);
-  let userInfo = null;
+export const getLoggedInUser = async (totalCreators, account, Contract) => {
+  let userDetails = null;
 
-  totalCreators &&
-    totalCreators.length > 0 &&
+  // If he is a creator
+  if (totalCreators && totalCreators.length > 0) {
     totalCreators.forEach((item) => {
       if (item.walletAddress == account) {
-        userInfo = item;
+        userDetails = item;
       }
     });
+  }
+  if (!userDetails) {
+    // If he is normal user
+    const user = await Contract.getUserData(account);
+    if (user && user[2] !== true) {
+      const userInfo = {};
+      userInfo.name = user[1];
+      userInfo.isDisabled = user[2];
+      userInfo.isCreator = user[3];
+      userInfo.totalFundContributorsCount = ethers.utils.formatUnits(user[4], 0);
+      userInfo.totalFundsReceived = ethers.utils.formatUnits(user[5], 0);
+      userInfo.totalCreatorsFundedCount = ethers.utils.formatUnits(user[6], 0);
+      userInfo.totalFundsSent = ethers.utils.formatUnits(user[7], 0);
+      userInfo.withdrawbleBalance = ethers.utils.formatUnits(user[8], 0);
+      userDetails = userInfo;
+    }
+  }
+  return userDetails;
+};
 
-  console.log(userInfo, "u");
-  return userInfo;
+export const addNewUserOnLogin = async (Contract) => {
+  try {
+    const randomString = (Math.random() + 1).toString(36).substring(2);
+    const userName = `mebloc_user_${randomString}`;
+    await Contract.createUser(userName);
+  } catch (error) {
+    console.log(error, "error");
+  }
 };

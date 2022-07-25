@@ -5,16 +5,16 @@ import { Link } from "react-router-dom";
 
 import { ethers } from "ethers";
 import Config from "../Config";
-import { getAllCreators, getLoggedInUser } from "../helpers/functions";
+import { getAllCreators, getLoggedInUser, addNewUserOnLogin } from "../helpers/functions";
 
 export default function Example() {
-  const { loading, accounts, addWeb3ProviderToContext, addUserInfo, addCreatorData } = useContext(GlobalContext);
+  const { accounts, addWeb3ProviderToContext, addUserInfo, addCreatorData, userInfo, Contract } = useContext(GlobalContext);
 
   const doAuth = async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const accounts = await provider.listAccounts();
     const signer = provider.getSigner();
-    const Contract = new ethers.Contract(Config.CREATOR_FUND.GANACHE.CONTRACT_ADDRESS, Config.CREATOR_FUND.GANACHE.ABI, signer);
+    const Contract = new ethers.Contract(Config.CREATOR_FUND.ROPSTEN.CONTRACT_ADDRESS, Config.CREATOR_FUND.ROPSTEN.ABI, signer);
     await addWeb3ProviderToContext({
       provider,
       signer,
@@ -22,7 +22,6 @@ export default function Example() {
       Contract
     });
     const creatorData = await getAllCreators(Contract);
-    console.log(creatorData, "creatorData");
     await addCreatorData({
       creatorData
     });
@@ -30,6 +29,13 @@ export default function Example() {
     await addUserInfo({
       userInfo: userInfo[0]
     });
+  };
+
+  const signUp = async () => {
+    // insert user if he is not in our records
+    if (!userInfo || !userInfo.name) {
+      await addNewUserOnLogin(Contract);
+    }
   };
 
   return (
@@ -56,18 +62,27 @@ export default function Example() {
           </nav>
         </div>
 
-        <div className="inline-flex items-center ml-5 space-x-6 lg:justify-end">
+        <div className="inline-flex items-center ml-1 space-x-5 lg:justify-end">
           {accounts && accounts.length > 0 && (
-            <span className="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900 bg-indigo-100">Connected to : {accounts[0]}</span>
+            <span className="mr-2 font-medium leading-6 text-gray-600 hover:text-gray-900 bg-indigo-100">Connected to : {accounts[0]}</span>
           )}
 
           <button
             disabled={accounts && accounts.length > 0 && accounts[0] ? true : false}
             onClick={doAuth}
-            className="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-white whitespace-no-wrap bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600">
+            className="inline-flex items-center justify-center px-2 py-1 text-base font-medium leading-6 text-white whitespace-no-wrap bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600">
             {accounts && accounts.length > 0 && accounts[0] ? "Connected" : "Connect to wallet"}
           </button>
         </div>
+        {!userInfo && (
+          <button
+            disabled={userInfo && userInfo.name ? true : false}
+            onClick={signUp}
+            className="inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            {/* {userInfo && userInfo.name ? `${userInfo.name}` : "Sign Up"} */}
+            Sign Up
+          </button>
+        )}
       </div>
     </section>
   );
