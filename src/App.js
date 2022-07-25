@@ -13,6 +13,7 @@ const App = () => {
   useEffect(() => {
     (async () => {
       try {
+        await window.ethereum.enable();
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const accounts = await provider.listAccounts();
         const network = await provider.getNetwork();

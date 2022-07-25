@@ -11,6 +11,7 @@ export default function Example() {
   const { accounts, addWeb3ProviderToContext, addUserInfo, addCreatorData, userInfo, Contract } = useContext(GlobalContext);
 
   const doAuth = async () => {
+    await window.ethereum.enable();
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const accounts = await provider.listAccounts();
     const signer = provider.getSigner();
