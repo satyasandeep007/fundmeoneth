@@ -58,10 +58,6 @@ $ npx hardhat --network local verify {YOUR_CONTRACT_ADDRESS}
 $ npm install
 $ npm run start
 ```
-## ✨ Future Scope
- - Unique NFT Collections per video.
- - Recommendation of NFT Value based on number of likes and views.
- - Video highlights based on most replayed parts of the video.
 
 ## 👫 Contributors 
 * [Shiva Kumar Mangina](https://github.com/shivamangina)
