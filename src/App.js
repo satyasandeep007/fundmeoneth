@@ -20,7 +20,7 @@ const App = () => {
         if (network.name !== Config.CREATOR_FUND.network)
           throw Error(`You are using ${network.name}, Please switch to ${Config.CREATOR_FUND.network} to use our App`);
         const signer = provider.getSigner();
-        const Contract = new ethers.Contract(Config.CREATOR_FUND.ROPSTEN.CONTRACT_ADDRESS, Config.CREATOR_FUND.ROPSTEN.ABI, signer);
+        const Contract = new ethers.Contract(Config.CREATOR_FUND.MUMBAI.CONTRACT_ADDRESS, Config.CREATOR_FUND.MUMBAI.ABI, signer);
         await addWeb3ProviderToContext({
           provider,
           signer,

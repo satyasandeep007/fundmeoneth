@@ -15,7 +15,7 @@ export default function Example() {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const accounts = await provider.listAccounts();
     const signer = provider.getSigner();
-    const Contract = new ethers.Contract(Config.CREATOR_FUND.ROPSTEN.CONTRACT_ADDRESS, Config.CREATOR_FUND.ROPSTEN.ABI, signer);
+    const Contract = new ethers.Contract(Config.CREATOR_FUND.MUMBAI.CONTRACT_ADDRESS, Config.CREATOR_FUND.MUMBAI.ABI, signer);
     await addWeb3ProviderToContext({
       provider,
       signer,

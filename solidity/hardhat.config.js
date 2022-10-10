@@ -19,19 +19,14 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 module.exports = {
   solidity: "0.8.7",
   networks: {
-    kovan: {
-      url: process.env.KOVAN,
-      accounts: [process.env.PRIVATE_KEY]
-    },
-    ropsten: {
-      url: process.env.ROPSTEN,
+    polygonMumbai: {
+      url: process.env.POLYGON_MUMBAI,
       accounts: [process.env.PRIVATE_KEY]
     }
   },
   etherscan: {
     apiKey: {
-      ropsten: process.env.ETHERSCAN_API_KEY,
-      kovan: process.env.ETHERSCAN_API_KEY
+      polygonMumbai: process.env.POLYGON_API_KEY
     }
   }
 };
